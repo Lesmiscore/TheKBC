@@ -13,6 +13,9 @@ import java.util.zip.ZipEntry;
 import java.io.IOException;
 import android.widget.Toast;
 import java.io.OutputStream;
+import android.view.SurfaceView;
+import android.media.MediaPlayer;
+import java.io.File;
 
 public class MainActivity extends Activity {
 	SharedPreferences pref;
@@ -28,7 +31,14 @@ public class MainActivity extends Activity {
 		}
     }
 	private void start(){
-		
+		try {
+			SurfaceView sv=(SurfaceView)findViewById(R.id.surfaceView);
+			MediaPlayer mp=new MediaPlayer();
+			mp.setDataSource(new File(getFilesDir(), "thekbc.mp4").toString());
+			mp.setDisplay(sv.getHolder());
+			mp.prepare();
+			mp.start();
+		} catch (IllegalArgumentException e) {} catch (SecurityException e) {} catch (IllegalStateException e) {} catch (IOException e) {}
 	}
 	private void ext(){
 		final ProgressDialog pd=new ProgressDialog(this);
