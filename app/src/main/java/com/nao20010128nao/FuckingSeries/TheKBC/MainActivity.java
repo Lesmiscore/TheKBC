@@ -23,12 +23,13 @@ import android.widget.RelativeLayout;
 public class MainActivity extends Activity {
 	SharedPreferences pref;
 	MediaPlayer mp;
+	SurfaceView sv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		final SurfaceView sv=(SurfaceView)findViewById(R.id.surfaceView);
+		sv=(SurfaceView)findViewById(R.id.surfaceView);
 		sv.getHolder().addCallback(new SurfaceHolder.Callback(){
 			public void surfaceCreated(SurfaceHolder sh){
 				if(mp!=null){
@@ -60,6 +61,9 @@ public class MainActivity extends Activity {
 			mp=new MediaPlayer();
 			mp.setDataSource(new File(getFilesDir(), "thekbc.mp4").toString());
 			mp.setLooping(true);
+			if(sv.getHolder().getSurface().isValid()){
+				mp.setDisplay(sv.getHolder());
+			}
 			mp.prepare();
 			mp.start();
 		} catch (Throwable e) {
