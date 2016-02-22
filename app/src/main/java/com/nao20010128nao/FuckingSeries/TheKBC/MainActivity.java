@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
 					if(!ze.getName().equals("thekbc.mp4")){
 						return false;
 					}
+					publishProgress((int)ze.getSize());
 					byte[] buf=new byte[8192];
 					int r=0;
 					while(true){
