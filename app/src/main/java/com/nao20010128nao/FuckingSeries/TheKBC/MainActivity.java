@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 		pd.setCancelable(false);
 		pd.setMessage("0%");
 		new AsyncTask<Void,Integer,Boolean>(){
-			int size=-1;
+			int size=11704734;
 			public Boolean doInBackground(Void... a){
 				int tmp=0;
 				ZipInputStream zis=null;
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 					if(!ze.getName().equals("thekbc.mp4")){
 						return false;
 					}
-					publishProgress((int)ze.getSize());
+					//publishProgress((int)ze.getSize());
 					byte[] buf=new byte[8192];
 					int r=0;
 					while(true){
@@ -83,6 +83,7 @@ public class MainActivity extends Activity {
 			public void onPostExecute(Boolean r){
 				if(r){
 					pd.dismiss();
+					pref.edit().putBoolean("done",true).commit();
 					start();
 				}else{
 					Toast.makeText(MainActivity.this,"Error",1).show();
@@ -94,7 +95,7 @@ public class MainActivity extends Activity {
 				if(size==-1){
 					size=value;
 				}else{
-					pd.setMessage(Math.floor(value/size*100)+"%");
+					pd.setMessage(((int)(value/size*100))+"%");
 				}
 			}
 		}.execute();
