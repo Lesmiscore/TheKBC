@@ -19,6 +19,7 @@ import java.io.File;
 
 public class MainActivity extends Activity {
 	SharedPreferences pref;
+	MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,19 +34,15 @@ public class MainActivity extends Activity {
 	private void start(){
 		try {
 			SurfaceView sv=(SurfaceView)findViewById(R.id.surfaceView);
-			MediaPlayer mp=new MediaPlayer();
+			mp=new MediaPlayer();
 			mp.setDataSource(new File(getFilesDir(), "thekbc.mp4").toString());
 			mp.setDisplay(sv.getHolder());
+			mp.setLooping(true);
 			mp.prepare();
 			mp.start();
-		} catch (IllegalArgumentException e) {
-			
-		} catch (SecurityException e) {
-			
-		} catch (IllegalStateException e) {
-			
-		} catch (IOException e) {
-			
+		} catch (Throwable e) {
+			e.printStackTrace();
+			ext();
 		}
 	}
 	private void ext(){
@@ -101,7 +98,7 @@ public class MainActivity extends Activity {
 			public void onPostExecute(Boolean r){
 				if(r){
 					pd.dismiss();
-					pref.edit().putBoolean("done",true).commit();
+					pref.edit().putBoolean("done",true).apply();
 					start();
 				}else{
 					Toast.makeText(MainActivity.this,"Error",1).show();
@@ -118,5 +115,12 @@ public class MainActivity extends Activity {
 			}
 		}.execute();
 		pd.show();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO: Implement this method
+		super.onDestroy();
+		mp.release();
 	}
 }
