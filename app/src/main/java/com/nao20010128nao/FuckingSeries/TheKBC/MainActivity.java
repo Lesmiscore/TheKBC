@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import android.view.SurfaceView;
 import android.media.MediaPlayer;
 import java.io.File;
+import android.view.SurfaceHolder;
 
 public class MainActivity extends Activity {
 	SharedPreferences pref;
@@ -25,6 +26,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
+		SurfaceView sv=(SurfaceView)findViewById(R.id.surfaceView);
+		sv.getHolder().addCallback(new SurfaceHolder.Callback(){
+			public void surfaceCreated(SurfaceHolder sh){
+				if(mp!=null){
+					mp.setDisplay(sh);
+				}
+			}
+			public void surfaceDestroyed(SurfaceHolder sh){
+
+			}
+			public void surfaceChanged(SurfaceHolder sh,int a,int b,int c){
+
+			}
+		});
      	if(pref.getBoolean("done",false)){
 			start();
 		}else{
@@ -33,10 +48,8 @@ public class MainActivity extends Activity {
     }
 	private void start(){
 		try {
-			SurfaceView sv=(SurfaceView)findViewById(R.id.surfaceView);
 			mp=new MediaPlayer();
 			mp.setDataSource(new File(getFilesDir(), "thekbc.mp4").toString());
-			mp.setDisplay(sv.getHolder());
 			mp.setLooping(true);
 			mp.prepare();
 			mp.start();
