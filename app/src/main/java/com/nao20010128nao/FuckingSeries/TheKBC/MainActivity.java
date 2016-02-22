@@ -38,7 +38,15 @@ public class MainActivity extends Activity {
 			mp.setDisplay(sv.getHolder());
 			mp.prepare();
 			mp.start();
-		} catch (IllegalArgumentException e) {} catch (SecurityException e) {} catch (IllegalStateException e) {} catch (IOException e) {}
+		} catch (IllegalArgumentException e) {
+			
+		} catch (SecurityException e) {
+			
+		} catch (IllegalStateException e) {
+			
+		} catch (IOException e) {
+			
+		}
 	}
 	private void ext(){
 		final ProgressDialog pd=new ProgressDialog(this);
