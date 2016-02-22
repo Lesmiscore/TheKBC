@@ -17,6 +17,8 @@ import android.view.SurfaceView;
 import android.media.MediaPlayer;
 import java.io.File;
 import android.view.SurfaceHolder;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
 	SharedPreferences pref;
@@ -26,12 +28,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		pref=PreferenceManager.getDefaultSharedPreferences(this);
-		SurfaceView sv=(SurfaceView)findViewById(R.id.surfaceView);
+		final SurfaceView sv=(SurfaceView)findViewById(R.id.surfaceView);
 		sv.getHolder().addCallback(new SurfaceHolder.Callback(){
 			public void surfaceCreated(SurfaceHolder sh){
 				if(mp!=null){
 					mp.setDisplay(sh);
 				}
+				int height=sv.getHeight();
+				double width=height/3*4;
+				System.out.println(height);
+				System.out.println(width);
+				RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams((int)width,height);
+				sv.setLayoutParams(lp);
 			}
 			public void surfaceDestroyed(SurfaceHolder sh){
 
@@ -40,6 +48,7 @@ public class MainActivity extends Activity {
 
 			}
 		});
+		
      	if(pref.getBoolean("done",false)){
 			start();
 		}else{
