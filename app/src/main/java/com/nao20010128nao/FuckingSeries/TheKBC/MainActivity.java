@@ -134,6 +134,27 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		// TODO: Implement this method
 		super.onDestroy();
-		mp.release();
+		if(mp!=null){
+			mp.release();
+		}
 	}
+
+	@Override
+	protected void onPause() {
+		// TODO: Implement this method
+		super.onPause();
+		if(mp!=null){
+			mp.pause();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO: Implement this method
+		super.onResume();
+		if(mp!=null){
+			mp.start();
+		}
+	}
+	
 }
