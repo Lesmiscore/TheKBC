@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
 				OutputStream os=null;
 				try{
 					zis=new ZipInputStream(new BufferedInputStream(getAssets().open("thekbc.zip")));
+					os=openFileOutput("thekbc.mp4",MODE_PRIVATE);
 					ZipEntry ze=zis.getNextEntry();
 					if(!ze.getName().equals("thekbc.mp4")){
 						return false;
@@ -96,5 +97,6 @@ public class MainActivity extends Activity {
 				}
 			}
 		}.execute();
+		pd.show();
 	}
 }
