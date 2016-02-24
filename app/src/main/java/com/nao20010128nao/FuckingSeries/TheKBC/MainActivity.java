@@ -35,11 +35,27 @@ public class MainActivity extends Activity {
 				if(mp!=null){
 					mp.setDisplay(sh);
 				}
-				int height=sv.getHeight();
-				double width=height/3*4;
-				System.out.println(height);
-				System.out.println(width);
-				RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams((int)width,height);
+				int basePixels=sv.getHeight()*sv.getWidth();
+				
+				
+				int heightH=sv.getHeight();
+				int widthH=heightH/3*4;
+				
+				int widthW=sv.getWidth();
+				int heightW=widthW/4*3;
+				
+				int height;
+				int width;
+				
+				if(heightH*widthH<basePixels){
+					height=heightH;
+					width=widthH;
+				}else{
+					height=heightW;
+					width=widthW;
+				}
+				
+				RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(width,height);
 				sv.setLayoutParams(lp);
 			}
 			public void surfaceDestroyed(SurfaceHolder sh){
